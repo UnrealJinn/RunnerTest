@@ -33,32 +33,24 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	UInputMappingContext* DefaultMappingContext;
-	
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	UInputAction* IA_MoveLeft;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	UInputAction* IA_MoveRight;
-	
 	UFUNCTION()
 	void Slide(const FInputActionValue& Value);
 	void EndSlide();
-
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	UInputAction* IA_Jump;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	UInputAction* IA_Slide;
 	// ===== Runner Settings =====
 	UPROPERTY(EditAnywhere, Category = "Runner")
 	float ForwardSpeed = 800.f;
-
 	UPROPERTY(EditAnywhere, Category = "Runner")
 	float LaneOffset = 400.f;
-	
 	UPROPERTY(editAnywhere, Category = "Runner")
 	USkeletalMeshComponent* Body;
 	UPROPERTY(EditAnywhere, Category = "Runner")

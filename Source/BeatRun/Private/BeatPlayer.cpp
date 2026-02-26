@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
+#include "BeatPlayer.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
-#include "BeatPlayer.h"
+
 
 // Sets default values
 ABeatPlayer::ABeatPlayer()
@@ -53,7 +53,6 @@ void ABeatPlayer::Tick(float DeltaTime)
 
 	// Constant forward motion
 	AddMovementInput(GetActorForwardVector(), 1.f);
-
 	// Smooth lane switching
 	FVector CurrentLocation = GetActorLocation();
 	FVector TargetPos = FVector(CurrentLocation.X, CurrentLane * LaneOffset, CurrentLocation.Z);
@@ -61,8 +60,6 @@ void ABeatPlayer::Tick(float DeltaTime)
 	FVector NewLocation = FMath::VInterpTo(CurrentLocation, TargetPos, DeltaTime, 15.f);
 	SetActorLocation(NewLocation);
 }
-
-
 // Called to bind functionality to input
 void ABeatPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -108,7 +105,6 @@ void ABeatPlayer::Slide(const FInputActionValue& Value)
 	if (!GetCharacterMovement()->IsCrouching())
 	{
 		Crouch();
-
 		// Slide duration can be adjusted
 		GetWorld()->GetTimerManager().SetTimer(SlideTimerHandle, this, &ABeatPlayer::EndSlide, 0.7f, false);
 	}
