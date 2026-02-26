@@ -2,6 +2,7 @@
 
 
 #include "BeaterFloor.h"
+#include "BeaterHurdleParent.h"
 
 // Sets default values
 ABeaterFloor::ABeaterFloor()
@@ -33,6 +34,7 @@ void ABeaterFloor::BeginPlay()
 	Super::BeginPlay();
 	SpawnTrigger->OnComponentBeginOverlap.AddDynamic(this, &ABeaterFloor::OnSpawnTriggerOverlap);
 	DestroyTrigger->OnComponentBeginOverlap.AddDynamic(this, &ABeaterFloor::OnDestroyTriggerOverlap);
+	SpawnHurdles();
 }
 
 // Called every frame
@@ -91,5 +93,50 @@ void ABeaterFloor::OnDestroyTriggerOverlap(UPrimitiveComponent* OverlappedCompon
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	//SetLifeSpan(10.0f);
+	for (ABeaterHurdleParent* Hurdle : SpawnedHurdles)
+	{
+		if (IsValid(Hurdle))
+		{
+			Hurdle->Destroy();
+		}
+	}
 	Destroy();
+}
+void ABeaterFloor::SpawnHurdles()
+{
+	if (HurdleClasses.Num() == 0)
+	{
+		UE_LOG(LogTemp, Error, TEXT("No HurdleClasses assigned"));
+		return;
+	}
+
+	UWorld* World = GetWorld();
+	if (!World) return;
+
+	const FVector FloorLocation = GetActorLocation();
+	const FVector RightVector = GetActorRightVector();
+	const FVector ForwardVector = GetActorForwardVector();
+	
+	for (int32 i = 0; i < LaneIndices.Num(); i++)
+	{
+		int32 Lane = LaneIndices[i];
+		FVector SpawnLocation = FloorLocation + FVector(HurdleForwardOffset, Lane * LaneOffset, 0.f);
+
+		// Pick random hurdle class
+		TSubclassOf<ABeaterHurdleParent> HurdleClass = HurdleClasses[FMath::RandRange(0, HurdleClasses.Num()-1)];
+
+		if (HurdleClass)
+		{
+			ABeaterHurdleParent* Hurdle = GetWorld()->SpawnActor<ABeaterHurdleParent>(
+				HurdleClass,
+				SpawnLocation,
+				GetActorRotation()
+			);
+			if (Hurdle)
+			{
+				Hurdle->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+				SpawnedHurdles.Add(Hurdle);
+			}
+		}
+	}
 }

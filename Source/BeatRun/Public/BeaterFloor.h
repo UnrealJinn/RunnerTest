@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
+#include "BeaterHurdleParent.h"
 #include "BeaterFloor.generated.h"
 
 UCLASS()
@@ -39,10 +40,21 @@ public:
 	float FloorLength = 1000.f;
 	UPROPERTY(EditAnywhere, Category = "Floor")
 	bool bHasSpawnedNext = false;
+	// ===== Hurdle Spawning =====
+	void SpawnHurdles();
+	UPROPERTY(EditDefaultsOnly, Category="Hurdles")
+	TArray<TSubclassOf<ABeaterHurdleParent>> HurdleClasses;
+	UPROPERTY(EditAnywhere, Category="Hurdles")
+	float HurdleSpawnOffsetX = 400.f;
+
+	TArray<int32> LaneIndices = { -1, 0, 1 }; 
+	float LaneOffset = 200.f; 
+
+	UPROPERTY(EditDefaultsOnly, Category="Lanes")
+	float HurdleForwardOffset = 400.f;
+	UPROPERTY()
+	TArray<class ABeaterHurdleParent*> SpawnedHurdles;
 private:
-
-
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 };
