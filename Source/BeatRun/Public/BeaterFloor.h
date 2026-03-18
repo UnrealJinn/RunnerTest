@@ -41,6 +41,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Floor")
 	bool bHasSpawnedNext = false;
 	// ===== Hurdle Spawning =====
+	//UFUNCTION(BlueprintImplementableEvent, Category = "Floor")
 	void SpawnHurdles();
 	UPROPERTY(EditDefaultsOnly, Category="Hurdles")
 	TArray<TSubclassOf<ABeaterHurdleParent>> HurdleClasses;
@@ -54,6 +55,18 @@ public:
 	float HurdleForwardOffset = 400.f;
 	UPROPERTY()
 	TArray<class ABeaterHurdleParent*> SpawnedHurdles;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Floor Setup")
+	float FloorWidth = 500.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Floor Setup")
+	float HurdleSafeMargin = 100.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Floor Setup")
+	int32 MinHurdlesPerFloor = 1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Floor Setup")
+	int32 MaxHurdlesPerFloor = 5;
 private:
 	virtual void Tick(float DeltaTime) override;
 
