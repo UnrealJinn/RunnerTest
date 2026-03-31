@@ -88,6 +88,14 @@ void ABeatPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
     EIC->BindAction(IA_Jump,      ETriggerEvent::Started,   this, &ABeatPlayer::Jump);
     EIC->BindAction(IA_Slide,     ETriggerEvent::Started,   this, &ABeatPlayer::Slide);
 }
+
+void ABeatPlayer::AddScore(float Addition)
+{
+    PlayerScore=PlayerScore+Addition;
+    if (PlayerScore<=0)
+        GEngine->AddOnScreenDebugMessage(1,5.0f,FColor::Yellow,TEXT("Playeris Dead"));
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // MoveForward — pushes the character along +X every frame
 // We do this manually rather than using AddMovementInput so speed is always

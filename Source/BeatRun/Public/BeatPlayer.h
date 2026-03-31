@@ -68,7 +68,11 @@ public:
 
     UPROPERTY(EditAnywhere, Category = "Runner")
     USpringArmComponent* SpringArm;
-
+    UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Runner")
+    float PlayerScore=0;
+    UFUNCTION(BlueprintCallable, Category = "Runner")
+    void AddScore(float Addition);
+    
     UCameraComponent* Camera;
     
     UPROPERTY(EditAnywhere,BlueprintReadOnly, Category = "Runner")

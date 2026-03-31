@@ -35,5 +35,6 @@ public:
 	int32 LaneIndex=0;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	float LaneOffset=400.0f;
-
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	float ScoreUpdate=1.0f;
 };

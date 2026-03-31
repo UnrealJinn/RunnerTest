@@ -49,7 +49,8 @@ public:
 	float HurdleSpawnOffsetX = 400.f;
 
 	TArray<int32> LaneIndices = { -1, 0, 1 }; 
-	float LaneOffset = 200.f; 
+	UPROPERTY(EditAnywhere, Category="Hurdles")
+	float LaneOffset = 500.f; 
 
 	UPROPERTY(EditDefaultsOnly, Category="Lanes")
 	float HurdleForwardOffset = 400.f;

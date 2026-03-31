@@ -36,6 +36,7 @@ void ABeaterHurdleParent::OnHurdleOverlap(UPrimitiveComponent* OverlappedCompone
 	ABeatPlayer* Player=Cast<ABeatPlayer>(OtherActor);
 	if (!Player) return;
 	UE_LOG(LogTemp,Warning, TEXT("Player hit Hurdle: %s"),*GetName());	
+	Player->AddScore(ScoreUpdate);
 }
 
 // Called every frame
